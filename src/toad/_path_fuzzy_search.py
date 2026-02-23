@@ -32,9 +32,6 @@ class PathFuzzySearch(FuzzySearch):
         offset_count = len(positions)
         score: float = offset_count + len(first_letters.intersection(positions))
 
-        # if 0 in first_letters:
-        #     score += 1
-
         groups = 1
         last_offset, *offsets = positions
         for offset in offsets:
@@ -43,7 +40,6 @@ class PathFuzzySearch(FuzzySearch):
             last_offset = offset
 
         # Boost to favor less groups
-
         normalized_groups = (offset_count - (groups - 1)) / offset_count
         score *= 1 + (normalized_groups * normalized_groups)
 
