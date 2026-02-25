@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Self
 
 from textual.app import ComposeResult
 from textual.content import Content
@@ -18,19 +17,22 @@ class NonSelectableStatic(Static):
 
 
 class Plan(containers.Grid):
-    BORDER_TITLE = "Plan"
+    # BORDER_TITLE = "Plan"
     DEFAULT_CLASSES = "block"
     DEFAULT_CSS = """
 
     Plan {        
-        border: panel $secondary;            
-        background: transparent;        
+        # border: panel $secondary;
+        border-top: ascii $secondary;            
+        border-bottom: ascii $secondary;
+        background: black 10%;        
         margin: 1 0 1 0 !important;   # Special case because the tall border reduces the apparent width           
-        padding: 1 1 0 1;        
+        padding: 0 1 0 1;        
         height: auto;                        
         grid-size: 2;
         grid-columns: auto 1fr;
-        grid-rows: auto;        
+        grid-rows: auto;
+        border-title-align: center;
 
         .-no-plan {
             text-style: dim italic;
@@ -51,10 +53,7 @@ class Plan(containers.Grid):
         }
         .status-pending {
             opacity: 0.7;
-        }
-        .plan.status-completed {
-            
-        }        
+        }          
     }
 
     """
@@ -79,6 +78,7 @@ class Plan(containers.Grid):
             return Plan.Entry(self.content, self.priority, status)
 
     entries: reactive[list[Entry] | None] = reactive(None, recompose=True)
+    all_complete: reactive[bool] = reactive(False, toggle_class="-all-complete")
 
     PRIORITIES = {
         "high": pill("H", "$error-muted", "$text-error"),
@@ -109,6 +109,12 @@ class Plan(containers.Grid):
             ):
                 newly_completed.add(entry)
         self.newly_completed = newly_completed
+        if new_entries:
+            self.all_complete = all(
+                entry.status == "completed" for entry in self.entries
+            )
+        else:
+            self.all_complete = False
 
     def compose(self) -> ComposeResult:
         if not self.entries:
@@ -131,14 +137,15 @@ class Plan(containers.Grid):
                 self.call_after_refresh(strike_text.strike)
             elif entry.status == "completed":
                 strike_text.add_class("-complete")
+        self.all_complete = all(entry.status == "completed" for entry in self.entries)
 
     def render_status(self, status: str) -> Content:
         if status == "completed":
-            return Content.from_markup("[$text-primary] ✔ ")
+            return Content(" ✔ ")
         elif status == "pending":
-            return Content.styled(" • ")
+            return Content(" • ")
         elif status == "in_progress":
-            return Content.from_markup("👉 ")
+            return Content("👉 ")
         return Content()
 
 

@@ -25,38 +25,38 @@ Menu {
 
 
 Plan {        
-    border: panel $secondary;            
-    background: transparent;        
-    margin: 1 0 1 0 !important;   # Special case because the tall border reduces the apparent width           
-    padding: 1 1 0 0;        
+    color: $primary;
+    border: none;
+    background: transparent;
+    # border: round $secondary 50%;
+    
+    &.-all-complete {                
+        border: round $success 50%;                                
+    }
+    
+
+    padding: 0 1 0 0;        
     height: auto;                        
     grid-size: 2;
     grid-columns: auto 1fr;
-    grid-rows: auto;        
+    grid-rows: auto;
+    border-title-align: center;
 
     .-no-plan {
         text-style: dim italic;
     }
 
     .plan {
-        color: $text-secondary;
+        color: $text-primary;
     }
+
     .status {
         padding: 0 0 0 0;
-        color: $text-secondary;
-    }
-    .priority {
-        padding: 0 0 0 0;
-    }
-    .status.status-completed {
-        color: $text-success;            
-    }
+        color: $text-primary;        
+    }    
     .status-pending {
-        opacity: 0.7;
-    }
-    .plan.status-completed {
-        
-    }        
+        opacity: 0.6;
+    }    
 }
 
 
@@ -180,11 +180,12 @@ Conversation {
         }
     }
 
-    ToolCall {
+    ToolCall {    
+        margin: 0;    
         padding: 0 0 0 1;        
         width: 1fr;
         layout: stream;
-        height: auto;
+        height: auto;        
 
         .icon {
             width: auto;
@@ -205,7 +206,7 @@ Conversation {
         ToolCallHeader {     
             pointer: pointer;       
             width: auto;
-            max-width: 1fr;            
+            max-width: 1fr;              
         }        
     }
 
@@ -233,16 +234,22 @@ Conversation {
 
     TerminalTool {
         height: auto;   
-        border: panel $text-secondary 90%;          
-        padding: 1 1 0 1;                
-        &.-success {
-            border: panel $text-success 90%;              
+        border: panel $primary 50%;                  
+        border-title-color: $text-primary;
+        background: $primary 10%;        
+        padding: 1 1 0 1;              
+        border-title-style: bold;
+        &.-success {            
+            opacity: 90%;
+            border-title-style: not bold;                                 
         }
+        
         &.-error {
-            border: panel $error-muted;              
+            opacity: 80%;
+            border: panel $error 40%;                              
+            border-title-style: not bold;               
             border-title-color: $text-error;
-            border-subtitle-align: right;
-            border-subtitle-style: bold;
+            background: $error 10%;            
         }             
     }
          
@@ -557,12 +564,10 @@ MainScreen {
 
 
         Plan {
-            border: none;
+            border: none !important;
             margin: 0 !important;
-            padding: 0 1 0 0;    
-            .plan {
-                color: $text-secondary;    
-            }
+            padding: 0 1 0 0;                
+            background: transparent;            
         }
 
 

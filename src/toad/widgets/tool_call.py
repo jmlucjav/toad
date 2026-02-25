@@ -158,8 +158,9 @@ class ToolCall(containers.VerticalGroup):
             expand_icon = Content("▼ " if self.expanded else "▶ ")
         else:
             expand_icon = Content.styled("▶ ", "$text 20%")
+            expand_icon = Content("")
 
-        header = Content.assemble(expand_icon, "🔧 ", (title, "$text-success"))
+        header = Content.assemble(expand_icon, "🔧 ", (title, "$text-secondary"))
 
         if status == "pending":
             header += Content.assemble(" ⌛")
