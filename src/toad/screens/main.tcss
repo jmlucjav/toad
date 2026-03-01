@@ -176,8 +176,8 @@ Conversation {
 
     ToolCall {    
         # margin: 0 0 0 0 !important;    
-        margin: 0 !important;        
-        padding: 0 0 0 1;        
+        margin: 0 0 0 1 !important;        
+        
         width: 1fr;
         layout: stream;
         height: auto;        
@@ -189,36 +189,35 @@ Conversation {
         #tool-content {
             display: none;
         }
-        &.-has-content #tool-content {
-            margin-top: 0;                
+        &.-has-content #tool-content {            
+            margin: 1 1 0 0;            
             DiffView {
                 margin: 1 1 0 0;                                              
             }
 
-            Markdown {
+            Markdown {                
                 layout: stream;
                 padding: 0;
-                & > MarkdownBlock {
-                    # &:last-of-type {
-                    #     margin: 1 0;
-                    # }
-                    margin: 1 0 0 0;
-                }                
+                margin: 0 0 0 0;
+                MarkdownBlock:last-of-type {
+                    margin-bottom: 0;
+                }
             }                  
         }
         &.-expanded {
             #tool-content {
-                display: block;
-                margin-bottom: 1; 
+                display: block;                
             }
         }
 
         ToolCallHeader {     
             pointer: pointer;       
             width: auto;
-            max-width: 1fr;              
+            max-width: 1fr;   
+            margin: 0 1 0 0;         
         }        
     }
+    padding-left: 1;  
 
    
 
