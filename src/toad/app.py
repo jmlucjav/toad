@@ -1,5 +1,4 @@
 import asyncio
-import gc
 from importlib.resources import files
 from datetime import datetime, timezone
 from functools import cached_property

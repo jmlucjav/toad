@@ -1,4 +1,3 @@
-import gc
 import sys
 
 import click
